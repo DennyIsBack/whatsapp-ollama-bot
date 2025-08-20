@@ -21,9 +21,9 @@ namespace whatsapp_ollama_bot
 
             // Configure the app to read from appsettings.json and environment variables.
             builder.Configuration
-                   .SetBasePath(Directory.GetCurrentDirectory())
-                   .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                   .AddEnvironmentVariables();
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddEnvironmentVariables();
 
             // Bind WhatsApp configuration and register the client service.
             var waConfigSection = builder.Configuration.GetSection("WhatsAppBusinessCloudApiConfiguration");
@@ -32,6 +32,9 @@ namespace whatsapp_ollama_bot
 
             // Register the Ollama client. It will read its own configuration from appsettings.json.
             builder.Services.AddSingleton<Services.OllamaClient>();
+
+            // Register the Google Calendar service.
+            builder.Services.AddSingleton<Services.GoogleCalendarService>();
 
             // Add controllers and JSON support. The WhatsApp client relies on Newtonsoft JSON.
             builder.Services.AddControllers().AddNewtonsoftJson();
